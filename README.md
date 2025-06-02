@@ -1,2 +1,2 @@
 # Expense-Tracking-System
-CentsAble is a personal expense tracker web app that helps users manage and visualize their spending habits over time. It features expense logging with categories, emoji icons, and interactive charts for financial insights.
+CentsAble 💸 is your smart and sleek personal finance companion that empowers you to take control of your spending. Seamlessly track expenses 📊, visualize your financial habits 📈, and manage your budget effortlessly 💰 — all wrapped in a clean, modern interface designed to make every cent count 💵. Transform the way you handle money and achieve your financial goals with CentsAble! 🚀✨
