@@ -1,4 +1,4 @@
-export const BASE_URL = "https://expense-tracking-system-1-3ru5.onrender.com" || "http://localhost:8000";
+export const BASE_URL = process.env.VITE_API_URL || "http://localhost:8000";
 
 export const API_PATHS = {
   AUTH: {
