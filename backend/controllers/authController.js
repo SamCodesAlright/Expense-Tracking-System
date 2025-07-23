@@ -116,7 +116,7 @@ exports.loginUser = async (req, res) => {
     // secure: Sends cookie only over HTTPS (won’t work on localhost unless using https).
     const options = {
       httpOnly: true,
-      // secure: true,   // Uncomment this line when deploying to production
+      secure: true,   // Uncomment this line when deploying to production
     };
 
     return res
@@ -148,7 +148,7 @@ exports.logoutUser = async (req, res) => {
 
   const options = {
     httpOnly: true,
-    // secure: true,
+    secure: true,
   };
 
   return res
@@ -191,7 +191,7 @@ exports.refreshAccessToken = async (req, res) => {
 
     const options = {
       httpOnly: true,
-      // secure: true,
+      secure: true,
     };
 
     const { accessToken, newRefreshToken } =
