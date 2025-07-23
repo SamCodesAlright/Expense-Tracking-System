@@ -83,9 +83,7 @@ Key goals of Centsable:
 2. **Setup Environment Variables**
 
 Create .env files in backend/ directory.
-
 In backend/.env
-
     ```bash
 
     PORT=5000
