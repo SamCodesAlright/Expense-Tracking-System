@@ -77,20 +77,24 @@ Key goals of Centsable:
 
 1. **Clone the repository**
    ```bash
+   
    git clone https://github.com/your-username/centsable.git
 
-2. Setup Environment Variables
+2. **Setup Environment Variables**
 
 Create .env files in backend/ directory.
 
 In backend/.env
 
-PORT=5000
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+    ```bash
+
+    PORT=5000
+    MONGO_URI=your_mongodb_uri
+    JWT_SECRET=your_jwt_secret
+    CLOUDINARY_CLOUD_NAME=your_cloud_name
+    CLOUDINARY_API_KEY=your_api_key
+    CLOUDINARY_API_SECRET=your_api_secret
+
 
 
 3. Install dependencies
