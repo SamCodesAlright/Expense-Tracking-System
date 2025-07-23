@@ -29,7 +29,6 @@ Key goals of Centsable:
 - 💾 **Cloudinary Image Uploads**
 - 🧮 **Real-time Budget Consumption Stats**
 - 📁 **RESTful API with Role-based Access**
-- 📦 **Dockerized Full-Stack Deployment**
 - ⚙️ **Environment-Based Configuration**
 - 🧪 **Unit & Integration Testing Ready**
 
@@ -55,11 +54,10 @@ Key goals of Centsable:
 
 **DevOps & Tools**  
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=github-actions&logoColor=white)  
-- Docker + Docker Compose  
 - GitHub Actions  
 - ESLint + Prettier  
 - dotenv  
-- Netlify / Vercel (Frontend)  
+- Render / Netlify / Vercel (Frontend)  
 - Render / Railway / AWS EC2 (Backend)
 
 ---
@@ -70,7 +68,6 @@ Key goals of Centsable:
 
 - [Node.js](https://nodejs.org/) (v18+)
 - [MongoDB](https://www.mongodb.com/) (local or Atlas)
-- [Docker](https://www.docker.com/) (optional for containerized setup)
 - [Cloudinary](https://cloudinary.com/) account (for media upload)
 - [Git](https://git-scm.com/)
 
