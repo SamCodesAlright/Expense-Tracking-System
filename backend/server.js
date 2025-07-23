@@ -16,6 +16,7 @@ const app = express();
 // Middleware to handle CORS
 app.use(
   cors({
+    // For local environment
     // origin: process.env.CLIENT_URL || "http://localhost:3000",
     origin: process.env.CLIENT_URL,
     credentials: true,
@@ -40,5 +41,5 @@ app.use("/api/v1/dashboard", dashboardRoutes);
 // Server Uploads file
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
