@@ -1,50 +1,85 @@
 const xlsx = require("xlsx");
 const Expense = require("../models/Expense");
+const Budget = require("../models/Budget");
 
-// Add Expense Category
 exports.addExpense = async (req, res) => {
-  const userId = req.user.id;
-
   try {
-    const { icon, category, amount, date } = req.body;
+    const { title, icon, category, amount, date } = req.body;
+    const userId = req.user.id;
+    const { budgetId } = req.params;
 
-    // Validation: Checking for the missing fields
-    if (!category || !amount || !date) {
-      return res.status(400).json({ message: "All Fields are Required" });
+    if (!title || !category || !amount || !date || !budgetId) {
+      return res.status(400).json({ message: "All fields are required." });
     }
 
-    const newExpense = new Expense({
-      userId,
+    // 1. Create expense
+    const expense = await Expense.create({
+      title,
       icon,
       category,
       amount,
-      date: new Date(date),
+      date,
+      userId,
+      budgetId,
     });
 
-    await newExpense.save();
-    res.status(200).json(newExpense);
-  } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    // 2. Link to budget (push expense ID)
+    const budget = await Budget.findById(budgetId);
+    if (!budget) {
+      return res.status(404).json({ message: "Budget not found" });
+    }
+
+    budget.expenses.push(expense._id);
+    budget.spent += parseFloat(amount); // 3. Update spent
+    await budget.save();
+
+    res
+      .status(201)
+      .json({ message: "Expense added and linked to budget", expense });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-// Get All expense Category
+// Get All Expenses
 exports.getAllExpense = async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const expense = await Expense.find({ userId }).sort({ date: -1 });
-    res.json(expense);
+    const expenses = await Expense.find({ userId }).sort({ date: -1 });
+    res.json(expenses);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
 };
 
-// Delete Income Source
+exports.getExpensesByBudgetId = async (req, res) => {
+  try {
+    const { budgetId } = req.params;
+    const userId = req.user.id;
+
+    const expenses = await Expense.find({ userId, budgetId }).sort({
+      date: -1,
+    });
+
+    res.status(200).json({ expenses });
+  } catch (error) {
+    console.error("Error fetching expenses for budget:", error);
+    res.status(500).json({ message: "Failed to fetch expenses for budget" });
+  }
+};
+
+// Delete Expense
 exports.deleteExpense = async (req, res) => {
   try {
-    await Expense.findByIdAndDelete(req.params.id);
-    res.json({ message: "Expense Deleted Successfully" });
+    const expense = await Expense.findById(req.params.id);
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+
+    await expense.deleteOne();
+    res.json({ message: "Expense deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
@@ -55,25 +90,23 @@ exports.downloadExpenseExcel = async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const expense = await Expense.find({ userId }).sort({ date: -1 });
+    const expenses = await Expense.find({ userId }).sort({ date: -1 });
 
-    // Preparing the data for Excel Sheet
-    const data = expense.map((item) => ({
+    const data = expenses.map((item) => ({
+      Title: item.title,
       Category: item.category,
       Amount: item.amount,
       Date: item.date,
     }));
 
-    // Creates a new Excel workbook
     const wb = xlsx.utils.book_new();
-    // Creates a new Excel worksheet
     const ws = xlsx.utils.json_to_sheet(data);
-    // Adds the worksheet to the workbook
-    xlsx.utils.book_append_sheet(wb, ws, "Expense");
-    // Writes the workbook to a file
-    xlsx.writeFile(wb, "expense_details.xlsx");
-    // Sends the file to the client for download
-    res.download("expense_details.xlsx");
+    xlsx.utils.book_append_sheet(wb, ws, "Expenses");
+
+    const filePath = "expense_details.xlsx";
+    xlsx.writeFile(wb, filePath);
+
+    res.download(filePath);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }

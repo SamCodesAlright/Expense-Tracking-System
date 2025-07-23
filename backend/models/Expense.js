@@ -8,9 +8,18 @@ const ExpenseSchema = new mongoose.Schema(
       required: true,
     },
     icon: { type: String },
+    title: {
+      type: String,
+      required: true,
+    },
     category: { type: String, required: true },
     amount: { type: Number, required: true },
     date: { type: Date, default: Date.now },
+    budgetId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Budget",
+      required: true,
+    },
   },
   { timestamps: true }
 );

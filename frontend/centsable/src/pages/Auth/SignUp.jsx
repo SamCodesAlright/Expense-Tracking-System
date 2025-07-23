@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { useNavigate, Link } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
@@ -24,49 +24,48 @@ function SignUp() {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    let profileImageUrl = "";
-
     if (!fullName) {
       setError("Please enter your full name");
       return;
     }
 
     if (!validateEmail(email)) {
-      setError("Please Enter a Valid Email Address");
+      setError("Please enter a valid email address");
       return;
     }
 
     if (!password) {
-      setError("Please Enter the Password");
+      setError("Please enter the password");
       return;
     }
 
     setError("");
 
-    // SignUp API Call
     try {
-      // Uploading Image if present
+      // Create a new FormData object
+      const formData = new FormData();
+      formData.append("fullName", fullName);
+      formData.append("email", email);
+      formData.append("password", password);
+
       if (profilePic) {
-        const imgUploadRes = await uploadImage(profilePic);
-        profileImageUrl = imgUploadRes.imageUrl || "";
+        formData.append("profileImageUrl", profilePic);
       }
 
-      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
-        fullName,
-        email,
-        password,
-        profileImageUrl,
-      });
+      const response = await axiosInstance.post(
+        API_PATHS.AUTH.REGISTER,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      const { token, user } = response.data;
+      const userRes = await axiosInstance.get(API_PATHS.AUTH.GET_USER_INFO);
+      updateUser(userRes.data);
 
-      if (token) {
-        localStorage.setItem("token", token);
-        updateUser(user);
-        navigate("/dashboard");
-      } else {
-        setError("Login failed - no token received");
-      }
+      navigate("/dashboard");
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
@@ -117,7 +116,7 @@ function SignUp() {
 
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="btn-primary cursor-pointer">
             Sign Up
           </button>
 

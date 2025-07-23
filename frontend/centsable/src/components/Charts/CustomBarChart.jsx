@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BarChart,
   Bar,
@@ -19,13 +18,21 @@ const CustomBarChart = ({ data }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
-          <p className="text-xs font-semibold text-lime-800 mb-1">
+        <div className="bg-white shadow-md rounded-lg p-2 border border-gray-200">
+          <p className="text-xs font-medium text-lime-700 mb-1">
             {payload[0].payload.category}
           </p>
+          {payload[0]?.payload?.title && (
+            <p className="text-sm text-gray-700 mb-1">
+              Title:{" "}
+              <span className="font-medium text-gray-900">
+                {payload[0].payload.title}
+              </span>
+            </p>
+          )}
           <p className="text-sm text-gray-600">
             Amount:{" "}
-            <span className="text-sm font-medium text-gray-900">
+            <span className="text-sm font-semibold text-emerald-700">
               ₹{payload[0].payload.amount}
             </span>
           </p>

@@ -32,22 +32,19 @@ function Login() {
 
     setError("");
 
-    // Login API Call
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
         email,
         password,
       });
 
-      const { token, user } = response.data;
+      // Fetching the user after login since backend stores tokens in cookies
+      const userResponse = await axiosInstance.get(
+        API_PATHS.AUTH.GET_USER_INFO
+      );
+      updateUser(userResponse.data);
 
-      if (token) {
-        localStorage.setItem("token", token);
-        updateUser(user);
-        navigate("/dashboard");
-      } else {
-        setError("Login failed - no token received");
-      }
+      navigate("/dashboard");
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
@@ -84,7 +81,7 @@ function Login() {
 
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="btn-primary cursor-pointer">
             Login
           </button>
 

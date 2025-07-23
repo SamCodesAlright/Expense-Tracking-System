@@ -1,5 +1,3 @@
-import React from "react";
-
 const CustomLegend = ({ payload }) => {
   return (
     <div className="flex flex-wrap justify-center gap-4 mt-4">

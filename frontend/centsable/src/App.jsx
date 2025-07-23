@@ -1,18 +1,20 @@
-import React from "react";
-
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
+
+import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
+import Budget from "./pages/Dashboard/Budget";
 import UserProvider from "./context/userContext";
 import { Toaster } from "react-hot-toast";
+import BudgetExpenses from "./pages/Dashboard/BudgetExpenses";
 
 const App = () => {
   return (
@@ -20,12 +22,17 @@ const App = () => {
       <div>
         <Router>
           <Routes>
-            <Route path="/" element={<Root />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" exact element={<Login />} />
             <Route path="/signup" exact element={<SignUp />} />
             <Route path="/dashboard" exact element={<Home />} />
             <Route path="/income" exact element={<Income />} />
             <Route path="/expense" exact element={<Expense />} />
+            <Route path="/budget" exact element={<Budget />} />
+            <Route
+              path="/budget/:budgetId/expense"
+              element={<BudgetExpenses />}
+            />
           </Routes>
         </Router>
       </div>
@@ -36,16 +43,3 @@ const App = () => {
 };
 
 export default App;
-
-const Root = () => {
-  // The !! converts the value to a boolean: If token exists → true (authenticated). If token is null or undefined → false (not authenticated).
-  // Checks if the user is authenticated
-  const isAuthenticated = !!localStorage.getItem("token");
-
-  // If authenticated (isAuthenticated === true), redirects to /dashboard. If not authenticated (isAuthenticated === false), redirects to /login.
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" />
-  ) : (
-    <Navigate to="/login" />
-  );
-};

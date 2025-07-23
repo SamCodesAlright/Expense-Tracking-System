@@ -1,5 +1,3 @@
-import React from "react";
-
 const Modal = ({ children, isOpen, onClose, title }) => {
   if (!isOpen) return null;
   return (
@@ -24,7 +22,7 @@ const Modal = ({ children, isOpen, onClose, title }) => {
               >
                 <path
                   d="M18 6L6 18M6 6L18 18"
-                  stroke="#875cf5"
+                  stroke="#7CCF00"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

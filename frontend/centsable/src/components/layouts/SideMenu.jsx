@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SIDE_MENU_DATA } from "../../utils/data";
 import { UserContext } from "../../context/userContext";
 import CharAvatar from "../Cards/CharAvatar";
+import { API_PATHS as AUTH_API } from "../../utils/apiPaths";
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = useContext(UserContext);
@@ -16,10 +17,19 @@ const SideMenu = ({ activeMenu }) => {
     navigate(route);
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    clearUser();
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post(AUTH_API.LOGOUT);
+      localStorage.clear();
+      clearUser();
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+      // Still clear local data even if backend call fails
+      localStorage.clear();
+      clearUser();
+      navigate("/login");
+    }
   };
 
   return (

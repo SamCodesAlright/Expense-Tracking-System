@@ -33,6 +33,7 @@ export const prepareExpenseBarChartData = (data = []) => {
   const chartData = data.map((item) => ({
     category: item?.category,
     amount: item?.amount,
+    title: item?.title,
   }));
 
   return chartData;
@@ -61,6 +62,23 @@ export const prepareExpenseLineChartData = (data = []) => {
     month: moment(item?.date).format("DD MM"),
     amount: item?.amount,
     category: item?.category,
+    title: item?.title,
+  }));
+
+  return chartData;
+};
+
+export const prepareBudgetBarChartData = (data = []) => {
+  const sortedData = [...data].sort(
+    (a, b) => new Date(a.startDate) - new Date(b.startDate)
+  );
+
+  const chartData = sortedData.map((item) => ({
+    date: item?.date ? moment(item.date).format("DD MM") : "N/A",
+    category: item?.category,
+    used: item?.currentSpending ?? item?.spent ?? 0,
+    remaining: item?.remaining ?? item?.amount - item?.spent ?? 0,
+    total: item?.amount || 0,
   }));
 
   return chartData;

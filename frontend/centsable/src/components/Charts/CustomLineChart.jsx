@@ -12,16 +12,17 @@ import {
 const CustomLineChart = ({ data }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
+      const { title, category, amount } = payload[0].payload;
+
       return (
         <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
-          <p className="text-xs font-semibold text-lime-800 mb-1">
-            {payload[0].payload.category}
+          <p className="text-xs font-semibold text-lime-700 mb-1">{category}</p>
+          <p className="text-sm text-gray-700 mb-1">
+            Title: <span className="font-medium text-gray-900">{title}</span>
           </p>
           <p className="text-sm text-gray-600">
             Amount:{" "}
-            <span className="text-sm font-medium text-gray-900">
-              ₹{payload[0].payload.amount}
-            </span>
+            <span className="text-sm font-medium text-gray-900">₹{amount}</span>
           </p>
         </div>
       );

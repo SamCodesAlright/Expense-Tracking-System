@@ -16,7 +16,9 @@ const uploadImage = async (imageFile) => {
         },
       }
     );
-    return response.data;
+    return {
+      imageUrl: response.data.profileImageUrl || "",
+    };
   } catch (error) {
     console.error("Error uploading the image:", error);
     throw error;

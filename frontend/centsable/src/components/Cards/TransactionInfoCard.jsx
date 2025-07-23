@@ -1,4 +1,3 @@
-import React from "react";
 import {
   LuUtensils,
   LuTrendingUp,
@@ -9,31 +8,47 @@ import {
 const TransactionInfoCard = ({
   title,
   icon,
+  category,
   date,
   amount,
   type,
   hideDeleteBtn,
   onDelete,
 }) => {
+  const isExpense = type === "expense";
+
   const getAmountStyles = () =>
-    type === "income" ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500";
+    isExpense ? "bg-red-50 text-red-500" : "bg-green-50 text-green-500";
+
+  const finalIcon = icon || <LuUtensils size={20} />;
 
   return (
     <div className="group relative flex items-center gap-4 mt-2 p-3 rounded-lg hover:bg-gray-100/60">
+      {/* Icon Circle */}
       <div className="w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full">
-        {icon ? (
-          <span className="text-2xl">{icon}</span>
+        {typeof finalIcon === "string" ? (
+          <span className="text-2xl">{finalIcon}</span>
         ) : (
-          <LuUtensils size={20} />
+          finalIcon
         )}
       </div>
 
+      {/* Main Content */}
       <div className="flex-1 flex items-center justify-between">
-        <div>
-          <p className="text-sm text-gray-700 font-medium">{title}</p>
-          <p className="text-xs text-gray-400 mt-1">{date}</p>
+        <div className="flex flex-col gap-1">
+          <p className="text-sm font-semibold text-gray-800">{title}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-xs text-gray-500">{date}</p>
+            {/* Enhanced category styling */}
+            {category && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
+                {category}
+              </span>
+            )}
+          </div>
         </div>
 
+        {/* Amount & Delete */}
         <div className="flex items-center gap-2">
           {!hideDeleteBtn && (
             <button
@@ -47,9 +62,9 @@ const TransactionInfoCard = ({
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${getAmountStyles()}`}
           >
             <h6 className="text-xs font-medium">
-              {type === "income" ? "+" : "-"} ₹{amount}
+              {isExpense ? "-" : "+"} ₹{amount}
             </h6>
-            {type === "income" ? <LuTrendingUp /> : <LuTrendingDown />}
+            {isExpense ? <LuTrendingDown /> : <LuTrendingUp />}
           </div>
         </div>
       </div>

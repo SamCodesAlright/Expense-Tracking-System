@@ -1,4 +1,3 @@
-import React from "react";
 import { LuDownload } from "react-icons/lu";
 import TransactionInfoCard from "../Cards/TransactionInfoCard";
 import moment from "moment";
@@ -18,8 +17,9 @@ const ExpenseList = ({ transactions, onDelete, onDownload }) => {
           transactions.map((expense) => (
             <TransactionInfoCard
               key={expense._id}
-              title={expense.category}
-              icon={expense.icon}
+              title={expense.title}
+              icon={expense.icon || "🧾"}
+              category={expense.category}
               date={moment(expense.date).format("DD MM YYYY")}
               amount={expense.amount}
               type="expense"
