@@ -81,9 +81,6 @@ Key goals of Centsable:
    git clone https://github.com/your-username/centsable.git
 
 2. **Setup Environment Variables**
-
-Create .env files in backend/ directory.
-In backend/.env
     ```bash
 
     PORT=5000
@@ -93,24 +90,22 @@ In backend/.env
     CLOUDINARY_API_KEY=your_api_key
     CLOUDINARY_API_SECRET=your_api_secret
 
+Create .env files in backend/ directory.
+
+In backend/.env
+
+3. **Install dependencies**
+    ```bash 
+
+   cd backend && npm install
+   cd ../frontend && npm install
 
 
-3. Install dependencies
+3. **Run Both Severs**
+    ```bash 
 
-cd backend && npm install
-cd ../frontend && npm install
+   npm run dev
 
-
-4. Run both servers
-
-For Backend -----
-cd .\backend\
-npm run dev
-
-For Frontend -----
-cd .\frontend\
-cd .\centsable\
-npm run dev
 
 
 Centsable Live: https://centsable.onrender.com/ 
