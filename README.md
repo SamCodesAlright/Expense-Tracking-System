@@ -53,7 +53,7 @@ Key goals of Centsable:
 - Cloudinary SDK
 
 **DevOps & Tools**  
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=github-actions&logoColor=white)  
+ ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=github-actions&logoColor=white)  
 - GitHub Actions  
 - ESLint + Prettier  
 - dotenv  
@@ -78,6 +78,7 @@ Key goals of Centsable:
 1. **Clone the repository**
    ```bash
    git clone https://github.com/your-username/centsable.git
+   
    For frontend ------
    cd frontend
    cd centsable
