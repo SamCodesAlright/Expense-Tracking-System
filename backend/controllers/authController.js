@@ -117,6 +117,7 @@ exports.loginUser = async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,   // Uncomment this line when deploying to production
+      sameSite: "None",
     };
 
     return res
@@ -149,6 +150,7 @@ exports.logoutUser = async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "None",
   };
 
   return res
@@ -192,6 +194,7 @@ exports.refreshAccessToken = async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
+      sameSite: "None",
     };
 
     const { accessToken, newRefreshToken } =
