@@ -111,9 +111,28 @@ In backend/.env
 Centsable Live: https://centsable.onrender.com/ 
 
 
+## 🖼 Screenshots
 
+### 🔐 Landing Page
+![Landing page](./screenshots/landing-page.png)
 
+### 📝 Signup Page
+![Signup](./screenshots/signup.png)
 
+### 🔐 Login Page
+![Login](./screenshots/login.png)
+
+### 📊 Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### 💰 Budget Page
+![Budget](./screenshots/budgets.png)
+
+### 💸 Expenses Page
+![Expenses](./screenshots/expenses.png)
+
+### 📈 Income Page
+![Income](./screenshots/income.png)
 
 
  
