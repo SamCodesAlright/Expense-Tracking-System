@@ -1,107 +1,103 @@
-# Centsable: Smart Expense Tracking Solution
+# 💰 Centsable: Smart Expense Tracking Solution
 
-## 🚀 Project Overview
-
-**Centsable** is a sleek, intelligent, and fully-featured **expense tracking system** designed to help individuals manage budgets, visualize spending patterns, and make smarter financial decisions. Whether you're a student managing a tight budget or a professional aiming for financial discipline, Centsable offers an intuitive interface, real-time insights, and powerful analytics to put you in control of your money.
-
-Key goals of Centsable:
-- Provide **visually engaging dashboards** for expenses and budgeting.
-- Enable users to **track spending by category**, timeline, and source.
-- Offer a clean **UX with mobile-responsive design**.
-- Allow modular growth for future integrations and AI-powered insights.
+### 🌐 [🚀 Live Demo → Centsable on Render](https://centsable.onrender.com/)
 
 ---
 
-## ✨ Features
+## 🧠 Overview
 
-- 🔐 **Secure Authentication** (JWT-based login system)
-- 📊 **Budget Management** with visual insights
-- 💸 **Expense Tracking** by category and time
-- 📈 **Interactive Charts** using Recharts
-- 💾 **Cloudinary Image Uploads**
-- 🧮 **Real-time Budget Consumption Stats**
-- 📁 **RESTful API with Role-based Access**
-- ⚙️ **Environment-Based Configuration**
-- 🧪 **Unit & Integration Testing Ready**
+**Centsable** is a modern, intelligent **expense tracking platform** built to simplify personal finance management.  
+It helps users **visualize spending patterns**, **set budgets**, and **gain financial control** — all through a sleek, responsive, and data-driven interface.
+
+Whether you're a student managing a tight budget or a professional aiming for smarter financial discipline, Centsable empowers you to **spend wisely and save smartly**.
+
+---
+
+## ✨ Key Features
+
+- 🔐 **Secure Authentication** – JWT-based login & signup system  
+- 📊 **Budget Management** – Set goals & track visual progress  
+- 💸 **Expense Tracking** – Categorize and view spending by time & category  
+- 📈 **Interactive Analytics** – Beautiful charts powered by Recharts  
+- ☁️ **Cloudinary Integration** – Image uploads for receipts or categories  
+- 🧮 **Real-time Budget Consumption Stats**  
+- ⚙️ **Environment-based Configurations** for better scalability  
+- 🧪 **Testing Ready** – Unit & integration test scaffolding included  
+- 🧰 **RESTful API** with modular routes & role-based access
 
 ---
 
 ## 🛠 Tech Stack
 
-**Frontend**  
-![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![Tailwind](https://img.shields.io/badge/TailwindCSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)  
-- React.js  
-- Tailwind CSS  
-- React Router  
-- Axios  
-- Recharts
+### 🎨 Frontend
+| Technology | Description |
+|-------------|--------------|
+| ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) | Component-based UI framework |
+| ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white) | Modern utility-first CSS styling |
+| React Router | Client-side routing |
+| Axios | API communication |
+| Recharts | Data visualization & charts |
 
-**Backend**  
-![Node](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white)  
-- Node.js  
-- Express.js  
-- MongoDB + Mongoose  
-- JWT, Bcrypt  
-- Cloudinary SDK
+### ⚙️ Backend
+| Technology | Description |
+|-------------|--------------|
+| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white) | JavaScript runtime for backend |
+| ![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) | Minimal web framework |
+| MongoDB + Mongoose | NoSQL database with schema modeling |
+| JWT + Bcrypt | Authentication & password security |
+| Cloudinary SDK | Cloud-based image storage & optimization |
 
-**DevOps & Tools**  
- ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=github-actions&logoColor=white)  
-- GitHub Actions  
-- ESLint + Prettier  
-- dotenv  
-- Render / Netlify / Vercel (Frontend)  
-- Render / Railway / AWS EC2 (Backend)
+### 🔧 DevOps & Tooling
+| Tool | Purpose |
+|------|----------|
+| ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=github-actions&logoColor=white) | CI/CD automation |
+| ESLint + Prettier | Code linting & formatting |
+| dotenv | Environment variable management |
+| Render / Netlify / Vercel | Frontend deployment |
+| Render / Railway / AWS EC2 | Backend deployment |
 
 ---
 
-## 📦 Installation
+## 📦 Installation & Setup
 
 ### ⚙️ Prerequisites
-
+Ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (v18+)
-- [MongoDB](https://www.mongodb.com/) (local or Atlas)
-- [Cloudinary](https://cloudinary.com/) account (for media upload)
+- [MongoDB](https://www.mongodb.com/) (Local or Atlas)
+- [Cloudinary](https://cloudinary.com/) account
 - [Git](https://git-scm.com/)
 
-### 🚀 Setup Steps
+---
 
-#### 🔧 Local Development (Without Docker)
+### 🧩 Local Setup (Without Docker)
 
-1. **Clone the repository**
-   ```bash
-   
-   git clone https://github.com/your-username/centsable.git
+#### 1️. Clone the repository
+```bash
+git clone https://github.com/your-username/centsable.git
+cd centsable
+```
 
-2. **Setup Environment Variables**
-    ```bash
+#### 2. Configure environment variables
+Create a .env file inside the backend/ directory and add:
+```bash
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
 
-    PORT=5000
-    MONGO_URI=your_mongodb_uri
-    JWT_SECRET=your_jwt_secret
-    CLOUDINARY_CLOUD_NAME=your_cloud_name
-    CLOUDINARY_API_KEY=your_api_key
-    CLOUDINARY_API_SECRET=your_api_secret
+#### 3. Install dependencies
+```bash
+cd backend && npm install
+cd ../frontend && npm install
+```
 
-Create .env files in backend/ directory.
-
-In backend/.env
-
-3. **Install dependencies**
-    ```bash 
-
-   cd backend && npm install
-   cd ../frontend && npm install
-
-
-3. **Run Both Severs**
-    ```bash 
-
-   npm run dev
-
-
-
-Centsable Live: https://centsable.onrender.com/ 
-
+#### 4. Run the development servers
+```bash
+npm run dev
+```
 
 ## 🖼 Screenshots
 
@@ -126,6 +122,14 @@ Centsable Live: https://centsable.onrender.com/
 ### 📈 Income Page
 ![Income](./screenshots/income.png)
 
+## 💡 Future Scope
 
- 
-   
+- 🤖 AI-powered spending predictions & insights 
+- 📱 Mobile App (React Native or Flutter)
+- 🌍 Multi-currency & localization support 
+- 🧮 Automation of Expense Tracking via messages and emails after spending using Internet Banking  
+
+
+#### 👨‍💻 Author
+
+Sameer Shaikh
