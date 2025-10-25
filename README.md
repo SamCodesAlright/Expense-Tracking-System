@@ -1,7 +1,5 @@
 # Centsable: Smart Expense Tracking Solution
 
----
-
 ## 🚀 Project Overview
 
 **Centsable** is a sleek, intelligent, and fully-featured **expense tracking system** designed to help individuals manage budgets, visualize spending patterns, and make smarter financial decisions. Whether you're a student managing a tight budget or a professional aiming for financial discipline, Centsable offers an intuitive interface, real-time insights, and powerful analytics to put you in control of your money.
