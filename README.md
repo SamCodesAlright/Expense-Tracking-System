@@ -1,10 +1,4 @@
-# 💰 Centsable: Smart Expense Tracking Solution
-
-![Build Status](https://img.shields.io/github/actions/workflow/status/your-username/centsable/ci.yml)
-![Version](https://img.shields.io/github/package-json/v/your-username/centsable)
-![License](https://img.shields.io/github/license/your-username/centsable)
-![Issues](https://img.shields.io/github/issues/your-username/centsable)
-![Stars](https://img.shields.io/github/stars/your-username/centsable)
+# Centsable: Smart Expense Tracking Solution
 
 ---
 
