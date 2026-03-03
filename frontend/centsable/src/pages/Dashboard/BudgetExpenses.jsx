@@ -23,7 +23,7 @@ function BudgetExpenses() {
   const fetchBudgetExpenseDetails = async () => {
     try {
       const response = await axiosInstance.get(
-        API_PATHS.EXPENSE.GET_BUDGET_EXPENSES(budgetId)
+        API_PATHS.EXPENSE.GET_BUDGET_EXPENSES(budgetId),
       );
 
       const expenses = response.data.expenses || [];
@@ -61,8 +61,6 @@ function BudgetExpenses() {
   useEffect(() => {
     fetchBudgetExpenseDetails();
   }, [budgetId]);
-
-  console.log("selectedBudget:", selectedBudget);
 
   return (
     <DashboardLayout activeMenu="Budget">

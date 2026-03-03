@@ -7,10 +7,8 @@ const BudgetsExpenseOverview = ({ transactions }) => {
 
   useEffect(() => {
     if (transactions?.length > 0) {
-      console.log("transactions", transactions);
       const result = prepareExpenseLineChartData(transactions);
       setChartData(result);
-      console.log(result);
     } else {
       setChartData([]);
     }
