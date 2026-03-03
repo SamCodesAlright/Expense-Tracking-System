@@ -16,16 +16,11 @@ const app = express();
 // Middleware to handle CORS
 app.use(
   cors({
-<<<<<<< HEAD
     origin: process.env.CLIENT_URL || "http://localhost:3000",
-=======
-    origin: process.env.CLIENT_URL,
-    credentials: true,
->>>>>>> 8273f5103fd85c6470a5520e5ae494151cf3da5d
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
@@ -33,6 +28,14 @@ app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 app.use(cookieParser());
 
 connectDB();
+
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    service: "Centsable Backend",
+    time: new Date(),
+  });
+});
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);
@@ -43,5 +46,5 @@ app.use("/api/v1/dashboard", dashboardRoutes);
 // Server Uploads file
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

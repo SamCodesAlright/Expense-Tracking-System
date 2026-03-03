@@ -4,3 +4,4 @@ backend/node_modules/
 
 # Environment files
 backend/.env
+backend/envOfProduction.txt
