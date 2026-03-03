@@ -17,35 +17,91 @@ function Login() {
   const navigate = useNavigate();
 
   // Handling the Login Form
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   console.log("Default prevented:", e.defaultPrevented);
+
+  //   if (!validateEmail(email)) {
+  //     setError("Please Enter a Valid Email Address");
+  //     return;
+  //   }
+
+  //   if (!password) {
+  //     setError("Please Enter the Password");
+  //     return;
+  //   }
+
+  //   setError("");
+
+  //   try {
+  //     const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+  //       email,
+  //       password,
+  //     });
+
+  //     // Fetching the user after login since backend stores tokens in cookies
+  //     const userResponse = await axiosInstance.get(
+  //       API_PATHS.AUTH.GET_USER_INFO,
+  //     );
+  //     updateUser(userResponse.data);
+
+  //     navigate("/dashboard");
+  //   } catch (error) {
+  //     if (error.response && error.response.data.message) {
+  //       setError(error.response.data.message);
+  //     } else {
+  //       setError("Something went wrong. Please try again");
+  //     }
+  //   }
+  // };
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("1. handleLogin called");
 
     if (!validateEmail(email)) {
       setError("Please Enter a Valid Email Address");
+      console.log("2. Email validation failed");
       return;
     }
 
     if (!password) {
       setError("Please Enter the Password");
+      console.log("3. Password validation failed");
       return;
     }
 
     setError("");
+    console.log("4. Calling API...");
 
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
         email,
         password,
       });
+      console.log("5. Login API response:", response);
 
-      // Fetching the user after login since backend stores tokens in cookies
+      // Extract the accessToken from the response and store it for future requests
+      const { accessToken } = response.data.data || response.data;
+      if (accessToken) {
+        // Store token in localStorage to use across requests
+        localStorage.setItem("accessToken", accessToken);
+        // Also set it in axios default header for subsequent requests
+        axiosInstance.defaults.headers.common["Authorization"] =
+          `Bearer ${accessToken}`;
+      }
+
       const userResponse = await axiosInstance.get(
-        API_PATHS.AUTH.GET_USER_INFO
+        API_PATHS.AUTH.GET_USER_INFO,
       );
+      console.log("6. User info response:", userResponse);
+
       updateUser(userResponse.data);
+      console.log("7. About to navigate to /dashboard");
 
       navigate("/dashboard");
+      console.log("8. navigate() called");
     } catch (error) {
+      console.log("9. Error caught:", error);
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {
@@ -64,19 +120,23 @@ function Login() {
 
         <form onSubmit={handleLogin}>
           <Input
+            name="email"
             value={email}
             onChange={({ target }) => setEmail(target.value)}
             label="Email Address"
             placeholder="sam@example.com"
             type="text"
+            autoComplete="email"
           />
 
           <Input
+            name="password"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
             label="Password"
             placeholder="Min 8 Characters"
             type="password"
+            autoComplete="current-password"
           />
 
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}

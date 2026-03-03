@@ -6,7 +6,6 @@ const axiosInstance = axios.create({
   timeout: 10000,
   withCredentials: true, // important for cookie-based auth
   headers: {
-    "Content-Type": "application/json",
     Accept: "application/json",
   },
 });
@@ -14,12 +13,22 @@ const axiosInstance = axios.create({
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // No need to manually attach Authorization header — tokens are in httpOnly cookies
+    // Check if token exists in localStorage and add to Authorization header
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // Set Content-Type for JSON requests (not FormData)
+    if (!(config.data instanceof FormData)) {
+      config.headers["Content-Type"] = "application/json";
+    }
+
     return config;
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response Interceptor with refresh-token retry logic
@@ -32,11 +41,26 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        await axiosInstance.post("/auth/refresh-token");
+        const refreshResponse = await axiosInstance.post(
+          "/api/v1/auth/refresh-token",
+        );
+        const newAccessToken = refreshResponse.data.data?.accessToken;
+        if (newAccessToken) {
+          localStorage.setItem("accessToken", newAccessToken);
+          axiosInstance.defaults.headers.common["Authorization"] =
+            `Bearer ${newAccessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        }
         return axiosInstance(originalRequest); // retry original request
       } catch (refreshError) {
         console.error("Refresh token failed");
-        window.location.href = "/login"; // redirect to login
+        // Clear token on refresh failure
+        localStorage.removeItem("accessToken");
+        delete axiosInstance.defaults.headers.common["Authorization"];
+        // avoid kicking user off if already on login page
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login"; // redirect to login
+        }
         return Promise.reject(refreshError);
       }
     }
@@ -49,7 +73,7 @@ axiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

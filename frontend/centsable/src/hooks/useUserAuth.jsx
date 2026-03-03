@@ -1,12 +1,13 @@
 import { useContext, useEffect } from "react";
 import { UserContext } from "../context/userContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 
 export const useUserAuth = () => {
   const { user, updateUser, clearUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (user) return;
@@ -23,7 +24,13 @@ export const useUserAuth = () => {
       } catch (error) {
         if (error.response?.status === 401) {
           clearUser();
-          navigate("/login");
+          // only redirect if we're not already on an auth page
+          if (
+            location.pathname !== "/login" &&
+            location.pathname !== "/signup"
+          ) {
+            navigate("/login");
+          }
         } else {
           console.error("Failed to fetch User Info:", error);
         }

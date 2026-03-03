@@ -55,23 +55,40 @@ function SignUp() {
       const response = await axiosInstance.post(
         API_PATHS.AUTH.REGISTER,
         formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        // Let axios handle Content-Type for FormData
       );
+
+      // After successful signup, auto-login the user
+      const loginResponse = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password,
+      });
+
+      // Extract the accessToken from the login response and store it
+      const { accessToken } = loginResponse.data.data || loginResponse.data;
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+        axiosInstance.defaults.headers.common["Authorization"] =
+          `Bearer ${accessToken}`;
+      }
 
       const userRes = await axiosInstance.get(API_PATHS.AUTH.GET_USER_INFO);
       updateUser(userRes.data);
 
       navigate("/dashboard");
     } catch (error) {
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
-      } else {
-        setError("Something went wrong. Please try again");
+      console.error("SignUp Error:", error);
+      let errorMessage = "Something went wrong. Please try again";
+
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.message) {
+        errorMessage = error.message;
       }
+
+      setError(errorMessage);
     }
   };
 
