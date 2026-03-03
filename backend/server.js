@@ -14,9 +14,25 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const app = express();
 
 // Middleware to handle CORS
+// allow requests from dev host, the deployed frontend and any other defined client URL
+const normalize = (u = "") => u.replace(/\/$/, "");
+const allowedOrigins = [
+  normalize(process.env.CLIENT_URL),
+  "https://centsable-psi.vercel.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: (origin, callback) => {
+      // some requests (curl, mobile apps) have no origin header - allow them
+      if (!origin) return callback(null, true);
+      const cleaned = normalize(origin);
+      if (allowedOrigins.includes(cleaned)) {
+        return callback(null, true);
+      }
+      callback(new Error(`CORS policy: origin ${origin} not allowed`));
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
