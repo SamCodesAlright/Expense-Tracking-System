@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -5,6 +6,8 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import { waitForBackend } from "./utils/waitForBackend";
+import BackendLoader from "./components/BackendLoader";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
@@ -17,6 +20,21 @@ import { Toaster } from "react-hot-toast";
 import BudgetExpenses from "./pages/Dashboard/BudgetExpenses";
 
 const App = () => {
+  const [backendReady, setBackendReady] = useState(false);
+
+  useEffect(() => {
+    const checkBackend = async () => {
+      const ready = await waitForBackend();
+      setBackendReady(ready);
+    };
+
+    checkBackend();
+  }, []);
+
+  if (!backendReady) {
+    return <BackendLoader />;
+  }
+
   return (
     <UserProvider>
       <div>
