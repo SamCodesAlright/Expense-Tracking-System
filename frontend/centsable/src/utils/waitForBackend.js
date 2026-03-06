@@ -1,11 +1,11 @@
-const API_URL = import.meta.env.VITE_API_URL;
+import { BASE_URL } from "./apiPaths";
 
 export const waitForBackend = async () => {
   const maxRetries = 15;
 
   for (let i = 0; i < maxRetries; i++) {
     try {
-      const res = await fetch(`${API_URL}/health`);
+      const res = await fetch(`${BASE_URL}/health`);
 
       if (res.ok) {
         return true;

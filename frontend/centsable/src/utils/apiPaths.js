@@ -1,5 +1,10 @@
 // For Production
-export const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const DEFAULT_PROD_API_URL = "https://centsable-backend.onrender.com";
+const DEFAULT_DEV_API_URL = "http://localhost:8000";
+
+export const BASE_URL = import.meta.env.DEV
+  ? import.meta.env.VITE_API_URL_DEV || DEFAULT_DEV_API_URL
+  : import.meta.env.VITE_API_URL || DEFAULT_PROD_API_URL;
 
 export const API_PATHS = {
   AUTH: {

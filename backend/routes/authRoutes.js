@@ -13,7 +13,16 @@ const upload = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
 
-router.post("/register", upload.single("profileImageUrl"), registerUser);
+const uploadSingleProfileImage = (req, res, next) => {
+  upload.single("profileImageUrl")(req, res, (err) => {
+    if (!err) return next();
+
+    const message = err?.message || "File upload error";
+    return res.status(400).json({ message });
+  });
+};
+
+router.post("/register", uploadSingleProfileImage, registerUser);
 router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
 router.post("/logout", protect, logoutUser);
