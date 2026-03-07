@@ -1,6 +1,6 @@
 # 💰 Centsable: Smart Expense Tracking Solution
 
-### 🌐 [🚀 Live Demo → Centsable on Render](https://centsable.onrender.com/)
+### 🌐 [🚀 Live Demo → Centsable](https://centsable-psi.vercel.app/)
 
 ---
 
@@ -53,8 +53,8 @@ Whether you're a student managing a tight budget or a professional aiming for sm
 | ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=github-actions&logoColor=white) | CI/CD automation |
 | ESLint + Prettier | Code linting & formatting |
 | dotenv | Environment variable management |
-| Render / Netlify / Vercel | Frontend deployment |
-| Render / Railway / AWS EC2 | Backend deployment |
+| Vercel | Frontend deployment |
+| Render | Backend deployment |
 
 ---
 
